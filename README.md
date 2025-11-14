@@ -12,7 +12,7 @@
 ![](https://github-profile-trophy.vercel.app/?username=CPT-Dawn&theme=darkhub&no-frame=true&no-bg=false&margin-w=4)
 
 ## 🌐 Socials:
-[![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/CPT_Dawn) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/cpt-swastik) [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/cpt._.swastik) [![Reddit](https://img.shields.io/badge/Reddit-%23FF4500.svg?logo=Reddit&logoColor=white)](https://reddit.com/user/Mr_DawnSP) [![Stack Overflow](https://img.shields.io/badge/-Stackoverflow-FE7A16?logo=stack-overflow&logoColor=white)](https://stackoverflow.com/users/24292489)  [![](https://visitcount.itsvg.in/api?id=CPT-Dawn&icon=5&color=6)](https://visitcount.itsvg.in)
+[![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/CPT_Dawn) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/cpt-swastik) [![Reddit](https://img.shields.io/badge/Reddit-%23FF4500.svg?logo=Reddit&logoColor=white)](https://reddit.com/user/Mr_DawnSP) [![Stack Overflow](https://img.shields.io/badge/-Stackoverflow-FE7A16?logo=stack-overflow&logoColor=white)](https://stackoverflow.com/users/24292489)  [![](https://visitcount.itsvg.in/api?id=CPT-Dawn&icon=5&color=6)](https://visitcount.itsvg.in)
 
 ---
 <!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
