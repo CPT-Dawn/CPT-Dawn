@@ -4,44 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CPT-Dawn portfolio with a minimalist Tokyo Night inspired interface and interactive eye tracking.">
-    <title>CPT-Dawn | Portfolio</title>
+    <title>CPT-Dawn</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --bg-0: #05070f;
-            --bg-1: #0b1020;
-            --bg-2: #10172b;
-            --line: rgba(144, 167, 211, 0.2);
-            --text-0: #d7def7;
-            --text-1: #8e9ac3;
+            --bg-0: #03050d;
+            --bg-1: #070b17;
+            --bg-2: #0b1020;
+            --text: #dbe4ff;
+            --muted: #8292bf;
             --cyan: #73daca;
             --violet: #bb9af7;
-            --blue: #7aa2f7;
-            --panel: rgba(13, 20, 38, 0.55);
-            --panel-strong: rgba(18, 26, 47, 0.72);
-            --glow-cyan: 0 0 25px rgba(115, 218, 202, 0.35);
-            --radius: 18px;
         }
 
         * {
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
+        html,
+        body {
+            height: 100%;
         }
 
         body {
-            background:
-                radial-gradient(circle at 20% 20%, rgba(122, 162, 247, 0.12), transparent 38%),
-                radial-gradient(circle at 80% 8%, rgba(187, 154, 247, 0.13), transparent 35%),
-                linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 45%, #080b15 100%);
-            color: var(--text-0);
-            font-family: "Inter", sans-serif;
             margin: 0;
             min-height: 100vh;
             overflow-x: hidden;
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            background:
+                radial-gradient(85% 70% at 12% 10%, rgba(122, 162, 247, 0.2), transparent 62%),
+                radial-gradient(70% 60% at 86% 12%, rgba(187, 154, 247, 0.18), transparent 64%),
+                linear-gradient(160deg, var(--bg-0), var(--bg-1) 55%, var(--bg-2));
+            display: grid;
+            place-items: center;
             position: relative;
         }
 
@@ -50,316 +51,255 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            background-image:
-                linear-gradient(to right, rgba(144, 167, 211, 0.06) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(144, 167, 211, 0.06) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.35) 0.45px, transparent 0.45px);
+            background-size: 2px 2px;
+            opacity: 0.13;
             z-index: -2;
         }
 
-        .noise-overlay {
+        .aurora {
+            position: fixed;
+            inset: -30vh -20vw;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(60px);
+            opacity: 0.65;
+            background:
+                radial-gradient(circle at 20% 22%, rgba(115, 218, 202, 0.34), transparent 38%),
+                radial-gradient(circle at 72% 30%, rgba(122, 162, 247, 0.3), transparent 42%),
+                radial-gradient(circle at 58% 80%, rgba(187, 154, 247, 0.28), transparent 38%);
+            animation: auroraShift 15s ease-in-out infinite alternate;
+            transform-origin: center;
+        }
+
+        .particles {
             position: fixed;
             inset: 0;
             pointer-events: none;
-            opacity: 0.18;
-            z-index: -1;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.25) 0.4px, transparent 0.4px);
-            background-size: 2px 2px;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 999px;
+            background: rgba(219, 228, 255, 0.7);
+            left: var(--x);
+            top: var(--y);
+            opacity: 0;
+            animation: particleFloat var(--dur) linear infinite;
+            animation-delay: var(--delay);
         }
 
         .cursor-glow {
             position: fixed;
-            width: 280px;
-            height: 280px;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
             border-radius: 999px;
             pointer-events: none;
             z-index: 1;
-            left: 0;
-            top: 0;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(115, 218, 202, 0.11) 0%, rgba(115, 218, 202, 0.02) 45%, rgba(0, 0, 0, 0) 70%);
-            filter: blur(2px);
-            transition: opacity 0.2s ease;
-            opacity: 0.75;
+            background: radial-gradient(circle, rgba(115, 218, 202, 0.14), rgba(115, 218, 202, 0.04) 42%, rgba(0, 0, 0, 0) 68%);
+            filter: blur(3px);
         }
 
-        .portfolio-shell {
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: clamp(1rem, 2vw, 1.5rem);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .stage {
+            width: min(980px, 92vw);
+            padding: clamp(1rem, 3vw, 2rem);
             position: relative;
             z-index: 2;
-        }
-
-        .frame {
-            border: 1px solid var(--line);
-            border-radius: calc(var(--radius) + 4px);
-            padding: clamp(1rem, 3vw, 2rem);
-            background: linear-gradient(165deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.05),
-                0 18px 60px rgba(4, 8, 20, 0.58);
-            backdrop-filter: blur(8px);
-        }
-
-        .shell-topbar {
             display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .eyes {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-            margin-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
-        }
-
-        .wm-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 999px;
-            opacity: 0.85;
-        }
-
-        .dot-cyan {
-            background: var(--cyan);
-            box-shadow: 0 0 10px rgba(115, 218, 202, 0.8);
-        }
-
-        .dot-violet {
-            background: var(--violet);
-            box-shadow: 0 0 10px rgba(187, 154, 247, 0.8);
-        }
-
-        .dot-blue {
-            background: var(--blue);
-            box-shadow: 0 0 10px rgba(122, 162, 247, 0.8);
-        }
-
-        .kernel-pill {
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-1);
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            padding: 0.36rem 0.7rem;
-            background: rgba(17, 24, 44, 0.45);
-        }
-
-        .title-font {
-            font-family: "Space Grotesk", sans-serif;
-            letter-spacing: -0.055em;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: clamp(1rem, 3vw, 2rem);
-            align-items: center;
-        }
-
-        .hero-title {
-            font-size: clamp(2.4rem, 9vw, 6.2rem);
-            font-weight: 700;
-            line-height: 0.95;
-            margin: 0;
-            text-wrap: balance;
-            text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
-        }
-
-        .hero-sub {
-            margin-top: 0.8rem;
-            max-width: 50ch;
-            color: var(--text-1);
-            font-size: clamp(0.93rem, 2vw, 1.02rem);
-            letter-spacing: 0.01em;
-        }
-
-        .eye-cluster {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 0.85rem;
-            padding: 0.8rem;
-            border-radius: var(--radius);
-            border: 1px solid var(--line);
-            background: linear-gradient(165deg, rgba(122, 162, 247, 0.12), rgba(187, 154, 247, 0.08));
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 12px 35px rgba(3, 8, 22, 0.55);
-            backdrop-filter: blur(5px);
+            padding: 0.45rem 0;
         }
 
         .eye {
-            width: clamp(54px, 8vw, 74px);
-            height: clamp(34px, 5vw, 46px);
-            background:
-                radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 55%),
-                linear-gradient(150deg, rgba(18, 26, 47, 0.9), rgba(11, 17, 34, 0.8));
-            border: 1px solid rgba(122, 162, 247, 0.45);
+            width: clamp(54px, 9vw, 76px);
+            height: clamp(34px, 6vw, 46px);
             border-radius: 999px;
+            border: 1px solid rgba(122, 162, 247, 0.48);
+            background:
+                radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 55%),
+                linear-gradient(150deg, rgba(18, 26, 47, 0.94), rgba(10, 16, 32, 0.86));
             position: relative;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 1px 9px rgba(255, 255, 255, 0.06), 0 8px 26px rgba(5, 10, 26, 0.6);
+            display: grid;
+            place-items: center;
+            box-shadow: inset 0 1px 9px rgba(255, 255, 255, 0.08), 0 0 28px rgba(122, 162, 247, 0.2);
             animation: blink 5.2s infinite;
-            transform-origin: center center;
         }
 
         .eye::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.18), transparent 48%);
-            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent 50%);
         }
 
         .pupil {
             width: clamp(16px, 2vw, 18px);
             height: clamp(16px, 2vw, 18px);
-            background: radial-gradient(circle at 30% 30%, #dff8ff 0%, #95efff 28%, #75d9f2 55%, #0f182f 100%);
-            border-radius: 50%;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 30%, #e8fdff 0%, #9befff 30%, #6bd8f1 58%, #101a33 100%);
+            box-shadow: 0 0 18px rgba(115, 218, 202, 0.65), inset -3px -3px 8px rgba(7, 12, 22, 0.62);
             position: absolute;
-            box-shadow: 0 0 18px rgba(115, 218, 202, 0.6), inset -4px -4px 8px rgba(8, 12, 26, 0.5);
             transform: translate(0, 0);
             will-change: transform;
         }
 
-        .links-wrap {
-            margin-top: clamp(1.4rem, 3vw, 2.6rem);
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.85rem;
+        .title {
+            margin: clamp(0.8rem, 2vw, 1.3rem) 0 0;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(2.6rem, 10vw, 6.5rem);
+            line-height: 0.92;
+            letter-spacing: -0.06em;
+            font-weight: 700;
+            text-wrap: balance;
+            background: linear-gradient(125deg, #f2f6ff 0%, #cfe8ff 30%, #a7c8ff 55%, #d7c9ff 85%, #f2f6ff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleSweep 8s ease-in-out infinite;
         }
 
-        .dock-link {
+        .links {
+            margin-top: clamp(1.3rem, 3vw, 2.2rem);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.85rem 1.25rem;
+        }
+
+        .link {
             --mx: 0px;
             --my: 0px;
-            --lift: 0px;
-            --x: 50%;
-            --y: 50%;
-            position: relative;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
             text-decoration: none;
-            color: var(--text-0);
-            border: 1px solid rgba(122, 162, 247, 0.28);
-            background: var(--panel);
-            border-radius: 14px;
-            padding: 0.85rem 0.95rem;
-            transform: translate3d(var(--mx), var(--my), 0) translateY(var(--lift));
-            transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease, color 220ms ease, transform 200ms ease;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            overflow: hidden;
+            color: var(--text);
+            padding: 0.15rem 0;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: clamp(0.85rem, 1.8vw, 0.96rem);
+            transform: translate3d(var(--mx), var(--my), 0);
+            transition: transform 180ms ease, color 220ms ease, text-shadow 220ms ease;
+            position: relative;
         }
 
-        .dock-link:hover,
-        .dock-link:focus-visible {
-            border-color: rgba(115, 218, 202, 0.7);
-            background: var(--panel-strong);
-            box-shadow: var(--glow-cyan), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        .link::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -0.08rem;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(115, 218, 202, 0), rgba(115, 218, 202, 0.95), rgba(187, 154, 247, 0.95), rgba(187, 154, 247, 0));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .link:hover,
+        .link:focus-visible {
             color: #eff7ff;
-            --lift: -2px;
+            text-shadow: 0 0 18px rgba(115, 218, 202, 0.5);
             outline: none;
         }
 
-        .dock-link::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(120px circle at var(--x) var(--y), rgba(115, 218, 202, 0.16), transparent 60%);
-            opacity: 0;
-            transition: opacity 220ms ease;
-            pointer-events: none;
+        .link:hover::before,
+        .link:focus-visible::before {
+            transform: scaleX(1);
         }
 
-        .dock-link:hover::before,
-        .dock-link:focus-visible::before {
-            opacity: 1;
+        .arrow {
+            color: var(--muted);
+            margin-left: 0.45rem;
+            transition: transform 180ms ease, color 180ms ease, opacity 180ms ease;
+            opacity: 0.7;
         }
 
-        .dock-link-label {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1rem;
-        }
-
-        .dock-link-name {
-            font-size: 0.98rem;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            line-height: 1.2;
-        }
-
-        .dock-link-url {
-            font-size: 0.72rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-1);
-        }
-
-        .dock-link-icon {
-            width: 1.15rem;
-            height: 1.15rem;
+        .link:hover .arrow,
+        .link:focus-visible .arrow {
+            transform: translateX(3px) translateY(-2px);
             color: var(--cyan);
-            flex-shrink: 0;
-            transition: transform 220ms ease, color 220ms ease;
-        }
-
-        .dock-link:hover .dock-link-icon,
-        .dock-link:focus-visible .dock-link-icon {
-            transform: translateX(1px) translateY(-1px);
-            color: #d8f9ff;
-        }
-
-        .footer-note {
-            margin-top: clamp(1.1rem, 2vw, 1.5rem);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.8rem;
-            color: var(--text-1);
-            font-size: 0.72rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-            background: var(--cyan);
-            box-shadow: 0 0 10px rgba(115, 218, 202, 0.85);
-            animation: pulse 2.3s ease-in-out infinite;
+            opacity: 1;
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(16px);
+            transform: translateY(22px);
             transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1), opacity 620ms ease;
         }
 
-        .reveal.delay-1 {
+        .delay-1 {
             transition-delay: 120ms;
         }
 
-        .reveal.delay-2 {
-            transition-delay: 210ms;
+        .delay-2 {
+            transition-delay: 200ms;
         }
 
         body.loaded .reveal {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        @keyframes auroraShift {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate3d(2vw, -3vh, 0) scale(1.06);
+            }
+
+            100% {
+                transform: translate3d(-2vw, 4vh, 0) scale(1.02);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate3d(0, 0, 0) scale(0.8);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.5;
+            }
+
+            80% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translate3d(0, -18vh, 0) scale(1.45);
+                opacity: 0;
+            }
+        }
+
+        @keyframes titleSweep {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         @keyframes blink {
@@ -375,174 +315,94 @@
             }
         }
 
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.85;
-            }
-
-            50% {
-                transform: scale(1.28);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 860px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .eye-cluster {
-                justify-self: start;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .links-wrap {
-                grid-template-columns: 1fr;
-            }
-
-            .portfolio-shell {
-                padding: 0.9rem;
-            }
-
-            .frame {
-                padding: 1rem;
+        @media (max-width: 700px) {
+            .stage {
+                align-items: center;
+                text-align: center;
             }
 
             .cursor-glow {
-                width: 220px;
-                height: 220px;
+                width: 210px;
+                height: 210px;
             }
 
-            .footer-note {
-                letter-spacing: 0.12em;
-                font-size: 0.66rem;
+            .links {
+                justify-content: center;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="particles" id="particles" aria-hidden="true"></div>
     <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
-    <main class="portfolio-shell">
-        <section class="frame" aria-label="Hero section">
-            <div class="shell-topbar reveal">
-                <div class="wm-controls" aria-hidden="true">
-                    <span class="dot dot-cyan"></span>
-                    <span class="dot dot-violet"></span>
-                    <span class="dot dot-blue"></span>
-                </div>
-                <div class="kernel-pill">Tokyo Night Build</div>
+    <main class="stage">
+        <div class="eyes reveal" aria-label="Interactive eyes">
+            <div class="eye" data-eye>
+                <div class="pupil"></div>
             </div>
-
-            <div class="hero-grid">
-                <div>
-                    <h1 class="title-font hero-title reveal delay-1">CPT-Dawn</h1>
-                    <p class="hero-sub reveal delay-2">
-                        Crafting clean interfaces and expressive frontend systems with terminal-grade clarity,
-                        kinetic motion, and intent in every pixel.
-                    </p>
-                </div>
-
-                <div class="eye-cluster reveal delay-2" id="eye-cluster" aria-label="Interactive eye tracking">
-                    <div class="eye" data-eye>
-                        <div class="pupil"></div>
-                    </div>
-                    <div class="eye" data-eye>
-                        <div class="pupil"></div>
-                    </div>
-                </div>
+            <div class="eye" data-eye>
+                <div class="pupil"></div>
             </div>
+        </div>
 
-            <nav class="links-wrap reveal delay-2" aria-label="Social links">
-                <a class="dock-link" href="https://github.com" target="_blank" rel="noopener noreferrer">
-                    <span class="dock-link-label">
-                        <span class="dock-link-name">GitHub</span>
-                        <span class="dock-link-url">code / open source</span>
-                    </span>
-                    <svg class="dock-link-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M14 5H19V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M10 14L19 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M19 14V18.2C19 18.6418 18.6418 19 18.2 19H5.8C5.35817 19 5 18.6418 5 18.2V5.8C5 5.35817 5.35817 5 5.8 5H10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </a>
+        <h1 class="title reveal delay-1">CPT-Dawn</h1>
 
-                <a class="dock-link" href="https://x.com" target="_blank" rel="noopener noreferrer">
-                    <span class="dock-link-label">
-                        <span class="dock-link-name">X</span>
-                        <span class="dock-link-url">notes / thoughts</span>
-                    </span>
-                    <svg class="dock-link-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M4 4L20 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-                        <path d="M20 4L4 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-                    </svg>
-                </a>
-
-                <a class="dock-link" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                    <span class="dock-link-label">
-                        <span class="dock-link-name">LinkedIn</span>
-                        <span class="dock-link-url">experience / network</span>
-                    </span>
-                    <svg class="dock-link-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.7"></rect>
-                        <path d="M8 11V16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-                        <path d="M8 8.4C8 8.17909 8.17909 8 8.4 8H8.6C8.82091 8 9 8.17909 9 8.4V8.6C9 8.82091 8.82091 9 8.6 9H8.4C8.17909 9 8 8.82091 8 8.6V8.4Z" fill="currentColor"></path>
-                        <path d="M12 16V12.8C12 11.8059 12.8059 11 13.8 11C14.7941 11 15.6 11.8059 15.6 12.8V16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-                    </svg>
-                </a>
-
-                <a class="dock-link" href="resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume link">
-                    <span class="dock-link-label">
-                        <span class="dock-link-name">Resume</span>
-                        <span class="dock-link-url">selected work / timeline</span>
-                    </span>
-                    <svg class="dock-link-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M8 7.2C8 6.53726 8.53726 6 9.2 6H14.4L18 9.6V16.8C18 17.4627 17.4627 18 16.8 18H9.2C8.53726 18 8 17.4627 8 16.8V7.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
-                        <path d="M14.4 6V9.6H18" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
-                        <path d="M10.7 12.1H15.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-                        <path d="M10.7 14.6H15.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-                    </svg>
-                </a>
-            </nav>
-
-            <div class="footer-note reveal delay-2">
-                <div class="flex items-center gap-2">
-                    <span class="status-dot" aria-hidden="true"></span>
-                    <span>Dawn is coming</span>
-                </div>
-                <span>Minimal / Functional / Precise</span>
-            </div>
-        </section>
+        <nav class="links reveal delay-2" aria-label="Direct links">
+            <a class="link" href="https://github.com/CPT-Dawn" target="_blank" rel="noopener noreferrer">
+                <span>GitHub</span>
+                <span class="arrow">↗</span>
+            </a>
+            <a class="link" href="https://x.com/CPT_Dawn" target="_blank" rel="noopener noreferrer">
+                <span>X</span>
+                <span class="arrow">↗</span>
+            </a>
+            <a class="link" href="https://www.linkedin.com/in/cptdawn/" target="_blank" rel="noopener noreferrer">
+                <span>LinkedIn</span>
+                <span class="arrow">↗</span>
+            </a>
+            <a class="link" href="https://github.com/CPT-Dawn/Resume" target="_blank" rel="noopener noreferrer">
+                <span>Resume</span>
+                <span class="arrow">↗</span>
+            </a>
+        </nav>
     </main>
 
     <script>
         const cursorGlow = document.getElementById("cursor-glow");
-        const eyeElements = Array.from(document.querySelectorAll("[data-eye]")).map((eye) => {
+        const particlesRoot = document.getElementById("particles");
+        const eyes = Array.from(document.querySelectorAll("[data-eye]")).map((eye) => {
             const pupil = eye.querySelector(".pupil");
-            return {
-                eye,
-                pupil,
-                currentX: 0,
-                currentY: 0,
-                targetX: 0,
-                targetY: 0
-            };
+            return { eye, pupil, currentX: 0, currentY: 0, targetX: 0, targetY: 0 };
         });
 
-        const links = document.querySelectorAll(".dock-link");
+        const links = document.querySelectorAll(".link");
         const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-        function updateEyeTargets(x, y) {
-            eyeElements.forEach((item) => {
+        function seedParticles() {
+            if (!particlesRoot) {
+                return;
+            }
+
+            const count = 26;
+            for (let i = 0; i < count; i += 1) {
+                const particle = document.createElement("span");
+                particle.className = "particle";
+                particle.style.setProperty("--x", `${Math.random() * 100}%`);
+                particle.style.setProperty("--y", `${55 + Math.random() * 45}%`);
+                particle.style.setProperty("--dur", `${8 + Math.random() * 11}s`);
+                particle.style.setProperty("--delay", `${Math.random() * 10}s`);
+                particlesRoot.appendChild(particle);
+            }
+        }
+
+        function setEyeTargets(x, y) {
+            eyes.forEach((item) => {
                 const rect = item.eye.getBoundingClientRect();
                 const eyeX = rect.left + rect.width / 2;
                 const eyeY = rect.top + rect.height / 2;
-
                 const dx = x - eyeX;
                 const dy = y - eyeY;
                 const angle = Math.atan2(dy, dx);
@@ -554,7 +414,7 @@
         }
 
         function animateEyes() {
-            eyeElements.forEach((item) => {
+            eyes.forEach((item) => {
                 item.currentX += (item.targetX - item.currentX) * 0.15;
                 item.currentY += (item.targetY - item.currentY) * 0.15;
                 item.pupil.style.transform = `translate(${item.currentX}px, ${item.currentY}px)`;
@@ -562,20 +422,16 @@
             requestAnimationFrame(animateEyes);
         }
 
-        function handlePointerMove(x, y) {
+        function onPointerMove(x, y) {
             pointer.x = x;
             pointer.y = y;
-
-            if (cursorGlow) {
-                cursorGlow.style.left = `${x}px`;
-                cursorGlow.style.top = `${y}px`;
-            }
-
-            updateEyeTargets(x, y);
+            cursorGlow.style.left = `${x}px`;
+            cursorGlow.style.top = `${y}px`;
+            setEyeTargets(x, y);
         }
 
         document.addEventListener("mousemove", (event) => {
-            handlePointerMove(event.clientX, event.clientY);
+            onPointerMove(event.clientX, event.clientY);
         });
 
         document.addEventListener("touchmove", (event) => {
@@ -583,7 +439,7 @@
             if (!touch) {
                 return;
             }
-            handlePointerMove(touch.clientX, touch.clientY);
+            onPointerMove(touch.clientX, touch.clientY);
         }, { passive: true });
 
         links.forEach((link) => {
@@ -591,39 +447,27 @@
                 const rect = link.getBoundingClientRect();
                 const relX = event.clientX - rect.left;
                 const relY = event.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
+                const cx = rect.width / 2;
+                const cy = rect.height / 2;
 
-                const offsetX = (relX - centerX) * 0.08;
-                const offsetY = (relY - centerY) * 0.12;
-
-                link.style.setProperty("--mx", `${offsetX}px`);
-                link.style.setProperty("--my", `${offsetY}px`);
-                link.style.setProperty("--x", `${relX}px`);
-                link.style.setProperty("--y", `${relY}px`);
+                link.style.setProperty("--mx", `${(relX - cx) * 0.11}px`);
+                link.style.setProperty("--my", `${(relY - cy) * 0.15}px`);
             });
 
             link.addEventListener("mouseleave", () => {
                 link.style.setProperty("--mx", "0px");
                 link.style.setProperty("--my", "0px");
-                link.style.setProperty("--x", "50%");
-                link.style.setProperty("--y", "50%");
             });
         });
 
-        document.addEventListener("visibilitychange", () => {
-            if (!document.hidden) {
-                updateEyeTargets(pointer.x, pointer.y);
-            }
-        });
-
         window.addEventListener("resize", () => {
-            updateEyeTargets(pointer.x, pointer.y);
+            setEyeTargets(pointer.x, pointer.y);
         });
 
         window.addEventListener("load", () => {
             document.body.classList.add("loaded");
-            updateEyeTargets(pointer.x, pointer.y);
+            seedParticles();
+            setEyeTargets(pointer.x, pointer.y);
             animateEyes();
         });
     </script>
