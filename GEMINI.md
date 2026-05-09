@@ -1,30 +1,49 @@
-# CPT-Dawn Personal Website
+# CPT-Dawn Project Context
 
 ## Project Overview
-This project is a personal portfolio/landing page for "CPT-Dawn". It is a static website consisting primarily of an `index.html` file that features interactive animations (aurora, floating particles, trailing eyes) and links to external professional profiles (GitHub, X, LinkedIn, Resume). The project is configured to be deployed using Cloudflare Pages/Workers via `wrangler.jsonc`.
+CPT-Dawn is a high-fidelity personal portfolio and digital identity landing page. It combines an interactive, visually rich frontend with a comprehensive suite of AI agent readiness features, making it both human-accessible and agent-optimized.
 
-**Main Technologies:**
-- HTML, CSS, JavaScript (Vanilla)
-- Tailwind CSS (via CDN)
-- Cloudflare Wrangler (Deployment)
+**Key Technologies:**
+- **Frontend:** Vanilla HTML5, CSS3 (with custom animations), JavaScript (ES6+), and Tailwind CSS (via CDN).
+- **Backend/Edge:** Cloudflare Pages with Cloudflare Workers (via `functions/` directory) for middleware and dynamic responses.
+- **AI Protocols:** RFC-compliant implementations for Markdown negotiation, A2A discovery, WebMCP, and more.
+
+## Architecture & Features
+- **Interactive UI:** Features advanced CSS/JS animations including an aurora background, floating particles, and interactive eye-tracking pupils.
+- **AI Agent Readiness:**
+    - **Markdown Negotiation (RFC 7231):** Served via `functions/_middleware.js` to provide LLM-friendly content when requested via `Accept: text/markdown`.
+    - **Discovery Protocols:** Implements `.well-known` endpoints for:
+        - **API Catalog (RFC 9727):** `/.well-known/api-catalog`
+        - **A2A Agent Card:** `/.well-known/agent-card.json`
+        - **MCP Server Card (SEP-1649):** `/.well-known/mcp/server-card.json`
+        - **Web Bot Auth:** `/.well-known/http-message-signatures-directory`
+        - **OAuth Discovery:** `/.well-known/openid-configuration` & `/.well-known/oauth-protected-resource`
+    - **WebMCP:** Integration in `index.html` via `navigator.modelContext.provideContext()` to expose site tools to browser-based agents.
+    - **Agent Discovery:** Uses the `_headers` file to broadcast discovery metadata via HTTP `Link` headers and `Vary: Accept`.
 
 ## Building and Running
-The project does not require a build step as it serves static assets directly from the root directory.
+The project is a static site hosted on Cloudflare Pages.
 
-To run the project locally for development, you can use Cloudflare Wrangler:
+**Local Development:**
 ```bash
 npx wrangler dev
 ```
 
-To deploy the project:
+**Deployment:**
 ```bash
+# Deploys the current directory to Cloudflare Pages
 npx wrangler pages deploy .
-# or
-npx wrangler deploy
 ```
-*(Verify specific deployment command based on the Cloudflare project setup)*
 
 ## Development Conventions
-- **Simplicity:** The project currently avoids complex build tools (no Webpack, Vite, or npm scripts) and relies on vanilla web technologies in a single HTML file.
-- **Styling:** Custom CSS is used for complex animations and visual effects, while Tailwind CSS is imported via CDN for utility classes.
-- **Deployment:** The `wrangler.jsonc` file configures the root directory `.` to be served as static assets.
+- **Zero Build Step:** Prefers vanilla technologies and CDN imports to maintain a lightweight, immediately deployable structure without a complex node/npm build pipeline.
+- **Agent First:** All new content or features should consider their representation in the Markdown version (`functions/_middleware.js`) and ensure corresponding discovery metadata is updated.
+- **Header Strictness:** Any new `.well-known` endpoint must be explicitly mapped in the `_headers` file with the correct `Content-Type` and `charset` to ensure compatibility with automated audit tools like `isitagentready.com`.
+
+## Key Files
+- `index.html`: Main UI, interactive scripts, and WebMCP integration.
+- `functions/_middleware.js`: Edge logic for content negotiation and header management.
+- `_headers`: Custom HTTP response headers for Cloudflare Pages.
+- `wrangler.jsonc`: Cloudflare configuration.
+- `sitemap.xml` & `robots.txt`: Standard SEO and crawler discovery.
+- `llms.txt`: Structured context for Large Language Models.
