@@ -1,0 +1,17 @@
+{
+  "keys": [
+    {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "dIr2eKo76_o834616oaMkoN1a-c0zN9SiyaXHvNkOdI",
+      "use": "sig",
+      "kid": "cptdawn-bot-2024"
+    }
+  ],
+  "signature_agent": "https://cptdawn.pages.dev",
+  "purpose": "ai",
+  "operator": {
+    "name": "CPT-Dawn",
+    "contact": "https://github.com/CPT-Dawn"
+  }
+}

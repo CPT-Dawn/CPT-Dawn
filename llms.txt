@@ -1,0 +1,22 @@
+# CPT-Dawn
+
+> Interactive personal portfolio and digital identity.
+
+## Links
+- [GitHub](https://github.com/CPT-Dawn)
+- [X (Twitter)](https://x.com/CPT_Dawn)
+- [LinkedIn](https://www.linkedin.com/in/cptdawn/)
+- [Resume](https://github.com/CPT-Dawn/Resume)
+
+## Technical Stack
+- Vanilla HTML/JS/CSS
+- Tailwind CSS
+- Cloudflare Pages
+
+## AI Agent Capabilities
+This site supports:
+- **WebMCP**: Exposes `getLinks` tool via browser.
+- **Markdown for Agents**: Content-negotiated Markdown at `/` and `/index.html`.
+- **API Catalog**: Discovery at `/.well-known/api-catalog`.
+- **MCP Server**: SEP-1649 metadata at `/.well-known/mcp/server-card.json`.
+- **Web Bot Auth**: Identification via `/.well-known/http-message-signatures-directory`.
