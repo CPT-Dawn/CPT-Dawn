@@ -1,0 +1,7 @@
+{
+  "resource": "https://cptdawn.pages.dev/api",
+  "authorization_servers": [
+    "https://cptdawn.pages.dev"
+  ],
+  "scopes_supported": ["read", "write"]
+}

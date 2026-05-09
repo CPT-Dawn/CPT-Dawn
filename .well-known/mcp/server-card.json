@@ -1,0 +1,15 @@
+{
+  "$schema": "https://mcp.spec.org/schema/server-card.json",
+  "serverInfo": {
+    "name": "CPT-Dawn Server",
+    "version": "1.0.0"
+  },
+  "transport": {
+    "type": "sse",
+    "endpoint": "https://cptdawn.pages.dev/mcp/sse"
+  },
+  "capabilities": {
+    "resources": true,
+    "tools": true
+  }
+}

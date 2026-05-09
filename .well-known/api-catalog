@@ -1,0 +1,16 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://cptdawn.pages.dev/",
+      "service-desc": [
+        {"href": "https://cptdawn.pages.dev/openapi.yaml", "type": "application/vnd.oai.openapi"}
+      ],
+      "service-doc": [
+        {"href": "https://cptdawn.pages.dev/docs", "type": "text/html"}
+      ],
+      "status": [
+        {"href": "https://cptdawn.pages.dev/health", "type": "application/json"}
+      ]
+    }
+  ]
+}

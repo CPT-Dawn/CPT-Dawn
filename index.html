@@ -371,6 +371,26 @@
     </main>
 
     <script>
+        if (navigator.modelContext && navigator.modelContext.provideContext) {
+            navigator.modelContext.provideContext({
+                tools: [
+                    {
+                        name: "getLinks",
+                        description: "Get the social and professional links for CPT-Dawn",
+                        inputSchema: {
+                            type: "object",
+                            properties: {}
+                        },
+                        execute: async () => {
+                            return {
+                                result: "GitHub: https://github.com/CPT-Dawn, X: https://x.com/CPT_Dawn, LinkedIn: https://www.linkedin.com/in/cptdawn/, Resume: https://github.com/CPT-Dawn/Resume"
+                            };
+                        }
+                    }
+                ]
+            });
+        }
+
         const cursorGlow = document.getElementById("cursor-glow");
         const particlesRoot = document.getElementById("particles");
         const eyes = Array.from(document.querySelectorAll("[data-eye]")).map((eye) => {
