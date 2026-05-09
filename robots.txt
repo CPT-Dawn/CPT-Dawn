@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cptdawn.pages.dev/sitemap.xml
+Sitemap: https://cptdawn.dev/sitemap.xml

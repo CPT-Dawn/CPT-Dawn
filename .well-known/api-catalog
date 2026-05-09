@@ -1,15 +1,15 @@
 {
   "linkset": [
     {
-      "anchor": "https://cptdawn.pages.dev/",
+      "anchor": "https://cptdawn.dev/",
       "service-desc": [
-        {"href": "https://cptdawn.pages.dev/openapi.yaml", "type": "application/vnd.oai.openapi"}
+        {"href": "https://cptdawn.dev/openapi.yaml", "type": "application/vnd.oai.openapi"}
       ],
       "service-doc": [
-        {"href": "https://cptdawn.pages.dev/docs", "type": "text/html"}
+        {"href": "https://cptdawn.dev/docs", "type": "text/html"}
       ],
       "status": [
-        {"href": "https://cptdawn.pages.dev/health", "type": "application/json"}
+        {"href": "https://cptdawn.dev/health", "type": "application/json"}
       ]
     }
   ]

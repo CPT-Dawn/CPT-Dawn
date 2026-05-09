@@ -1,6 +1,7 @@
 /*
-  Link: </.well-known/api-catalog>; rel="api-catalog", </.well-known/mcp/server-card.json>; rel="mcp-server-card", </.well-known/agent-card.json>; rel="agent-card"
+  Link: </.well-known/api-catalog>; rel="api-catalog", </.well-known/mcp/server-card.json>; rel="mcp-server-card", </.well-known/agent-card.json>; rel="agent-card", </index.md>; rel="alternate"; type="text/markdown"
   Vary: Accept
+  Content-Signal: ai-train=no, search=yes, ai-input=yes
 
 /.well-known/agent-card.json
   Content-Type: application/json; charset=utf-8

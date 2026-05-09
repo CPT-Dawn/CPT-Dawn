@@ -1,7 +1,7 @@
 {
-  "issuer": "https://cptdawn.pages.dev",
-  "authorization_endpoint": "https://cptdawn.pages.dev/oauth/authorize",
-  "token_endpoint": "https://cptdawn.pages.dev/oauth/token",
-  "jwks_uri": "https://cptdawn.pages.dev/.well-known/jwks.json",
+  "issuer": "https://cptdawn.dev",
+  "authorization_endpoint": "https://cptdawn.dev/oauth/authorize",
+  "token_endpoint": "https://cptdawn.dev/oauth/token",
+  "jwks_uri": "https://cptdawn.dev/.well-known/jwks.json",
   "grant_types_supported": ["authorization_code", "client_credentials"]
 }

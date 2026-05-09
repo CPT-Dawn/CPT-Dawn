@@ -5,7 +5,7 @@
       "name": "CPT-Dawn Info",
       "type": "openapi",
       "description": "Get information about CPT-Dawn.",
-      "url": "https://cptdawn.pages.dev/openapi.yaml",
+      "url": "https://cptdawn.dev/openapi.yaml",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ]

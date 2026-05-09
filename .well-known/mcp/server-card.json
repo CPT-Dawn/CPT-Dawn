@@ -6,7 +6,7 @@
   },
   "transport": {
     "type": "sse",
-    "endpoint": "https://cptdawn.pages.dev/mcp/sse"
+    "endpoint": "https://cptdawn.dev/mcp/sse"
   },
   "capabilities": {
     "resources": true,

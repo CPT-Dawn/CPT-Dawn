@@ -1,5 +1,5 @@
 {
   "resource": "https://cptdawn.dev",
-  "authorization_servers": ["https://cptdawn.pages.dev"],
+  "authorization_servers": ["https://cptdawn.dev"],
   "scopes_supported": ["openid", "profile", "email"]
 }
