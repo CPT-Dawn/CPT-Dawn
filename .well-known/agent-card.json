@@ -1,0 +1,31 @@
+{
+  "name": "CPT-Dawn Agent",
+  "version": "1.0.0",
+  "description": "Personal digital agent for CPT-Dawn, providing portfolio information and professional context.",
+  "url": "https://cptdawn.dev",
+  "supportedInterfaces": [
+    {
+      "url": "https://cptdawn.dev/",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": ["text/plain", "application/json"],
+  "defaultOutputModes": ["text/plain", "text/markdown", "application/json"],
+  "skills": [
+    {
+      "id": "info",
+      "name": "General Info",
+      "description": "Get general information about CPT-Dawn and the project."
+    },
+    {
+      "id": "links",
+      "name": "Social Links",
+      "description": "Retrieve social and professional links (GitHub, LinkedIn, X, Resume)."
+    }
+  ]
+}
